@@ -215,11 +215,11 @@ public class PartitionerConfig extends AbstractConfig implements ComposableConfi
 
   public static class BooleanParentRecommender implements ConfigDef.Recommender {
     protected final String parentConfigName;
-    
+
     public BooleanParentRecommender(String parentConfigName) {
       this.parentConfigName = parentConfigName;
     }
-    
+
     @Override
     public List<Object> validValues(String name, Map<String, Object> connectorConfigs) {
       return new LinkedList<>();
@@ -253,6 +253,8 @@ public class PartitionerConfig extends AbstractConfig implements ComposableConfi
           if (classNameEquals(DailyPartitioner.class, partitioner)
               || classNameEquals(HourlyPartitioner.class, partitioner)) {
             return name.equals(LOCALE_CONFIG) || name.equals(TIMEZONE_CONFIG);
+          } else if (classNameEquals(FieldAndHourlyPartitioner.class,partitioner)) {
+            return true;
           } else {
             return name.equals(PARTITION_DURATION_MS_CONFIG)
                    || name.equals(PATH_FORMAT_CONFIG)
